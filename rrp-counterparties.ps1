@@ -1,4 +1,5 @@
 ﻿
+Param([switch]$csv)
 
 $date = '2022-01-01'
 
@@ -18,6 +19,11 @@ $table = $items | ForEach-Object {
 }
 
 $table | Format-Table
+
+if ($csv)
+{
+    $table | Export-Csv ('rrp-counterparties-{0}.csv' -f (Get-Date -Format 'yyyy-MM-dd')) -NoTypeInformation
+}
 
 # $json = @{
 #     chart = @{

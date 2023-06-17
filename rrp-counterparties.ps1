@@ -81,3 +81,15 @@ $result = Invoke-RestMethod -Method Post -Uri 'https://quickchart.io/chart/creat
 $id = ([System.Uri] $result.url).Segments[-1]
 
 Start-Process ('https://quickchart.io/chart-maker/view/{0}' -f $id)
+
+# ----------------------------------------------------------------------
+exit
+# ----------------------------------------------------------------------
+
+$date = '2022-01-01'
+
+$result_data = Invoke-RestMethod ('https://markets.newyorkfed.org/api/rp/reverserepo/propositions/search.json?startDate={0}' -f $date)
+
+$result_data.repo.operations | Sort-Object operationDate | Select-Object -First 30 | ft *
+
+($result_data.repo.operations | Sort-Object operationDate)[0].propositions
